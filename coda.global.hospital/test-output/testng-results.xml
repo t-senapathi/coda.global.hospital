@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="4" passed="4" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2019-09-17T16:33:19 IST" name="Default suite" finished-at="2019-09-17T16:33:19 IST" duration-ms="704">
+    <groups>
+    </groups>
+    <test started-at="2019-09-17T16:33:19 IST" name="Default test" finished-at="2019-09-17T16:33:19 IST" duration-ms="704">
+      <class name="coda.global.hospital.patientdaotest.PatientDaoTest">
+        <test-method signature="createPatientTestRepeatedUsername()[pri:0, instance:coda.global.hospital.patientdaotest.PatientDaoTest@53ce1329]" started-at="2019-09-17T16:33:19 IST" name="createPatientTestRepeatedUsername" finished-at="2019-09-17T16:33:19 IST" duration-ms="531" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createPatientTestRepeatedUsername -->
+        <test-method signature="createPatientTestValidUsername()[pri:0, instance:coda.global.hospital.patientdaotest.PatientDaoTest@53ce1329]" started-at="2019-09-17T16:33:19 IST" name="createPatientTestValidUsername" finished-at="2019-09-17T16:33:19 IST" duration-ms="70" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createPatientTestValidUsername -->
+        <test-method signature="readPatientTestInvalidId()[pri:0, instance:coda.global.hospital.patientdaotest.PatientDaoTest@53ce1329]" started-at="2019-09-17T16:33:19 IST" name="readPatientTestInvalidId" finished-at="2019-09-17T16:33:19 IST" duration-ms="29" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- readPatientTestInvalidId -->
+        <test-method signature="readPatientTestValidId()[pri:0, instance:coda.global.hospital.patientdaotest.PatientDaoTest@53ce1329]" started-at="2019-09-17T16:33:19 IST" name="readPatientTestValidId" finished-at="2019-09-17T16:33:19 IST" duration-ms="21" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- readPatientTestValidId -->
+      </class> <!-- coda.global.hospital.patientdaotest.PatientDaoTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

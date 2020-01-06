@@ -11,14 +11,15 @@ import java.util.List;
 import coda.global.hospital.model.Patient;
 
 public class PatientDao {
-	DbConnection dbconnection=new DbConnection();
 	Patient patient = null;
 	boolean result;
 
 	public Patient createPatient(Patient patient) throws SQLException {
 		PreparedStatement userStatement, patientStatement;
+		DbConnection dbconnection=null;
 		Connection connection=null;
 		try {
+			dbconnection=new DbConnection();
 			connection = dbconnection.getConnection();
 			connection.setAutoCommit(false);
 			userStatement = connection.prepareStatement(
@@ -50,7 +51,6 @@ public class PatientDao {
 				if (rowsAffectedPatient!=0) {
 					connection.commit();
 					patient.setPkUserId(userId);
-					patient.setFkUserId(userId);
 					return patient;
 				} else {
 					connection.rollback();
@@ -74,10 +74,13 @@ public class PatientDao {
 	}
 
 	public Patient readPatient(int id) throws SQLException {// change to getPatient
-		Connection connection = dbconnection.getConnection();
+		DbConnection dbconnection=null;
+		Connection connection=null;
 		ResultSet resultSet;
 		PreparedStatement userStatement;
 		try {
+			dbconnection=new DbConnection();
+			connection = dbconnection.getConnection();
 			connection.setAutoCommit(false);
 			userStatement = connection.prepareStatement("select * from t_user join t_patient on t_user.pk_user_id=t_patient.fk_user_id where pk_user_id=? and t_user.is_deleted=0");
 			userStatement.setInt(1, id);
@@ -92,7 +95,6 @@ public class PatientDao {
 				patient.setLastName(resultSet.getString(6));
 				patient.setAge(resultSet.getInt(7));
 				patient.setPkPatientId(resultSet.getInt(11));
-				patient.setFkUserId(resultSet.getInt(12));
 				patient.setPatientHeight(resultSet.getInt(13));
 				patient.setPatientWeight(resultSet.getInt(14));
 				patient.setDoorNo(resultSet.getString(18));
@@ -113,31 +115,34 @@ public class PatientDao {
 	}
 
 	public List<Patient> readAllPatient() throws SQLException {
-		Connection connection = dbconnection.getConnection();
+		DbConnection dbconnection=null;
+		Connection connection=null;
 		ResultSet resultSet;
 		PreparedStatement userStatement;
 		List<Patient> patientlist = new ArrayList<Patient>();
 		try {
+			dbconnection=new DbConnection();
+			connection = dbconnection.getConnection();
 			connection.setAutoCommit(false);
 			userStatement = connection
 					.prepareStatement("select * from t_user join t_patient on t_user.pk_user_id=t_patient.fk_user_id where t_user.is_deleted=0");
 			resultSet = userStatement.executeQuery();
 			while (resultSet.next()) {
 				patient = new Patient();
-				patient.setUsername(resultSet.getString(1));
-				patient.setPassword(resultSet.getString(2));
-				patient.setPkUserId(resultSet.getInt(3));
-				patient.setFkRoleId(resultSet.getInt(4));
-				patient.setFirstName(resultSet.getString(5));
-				patient.setLastName(resultSet.getString(6));
-				patient.setAge(resultSet.getInt(7));
-				patient.setFkUserId(resultSet.getInt(11));
-				patient.setPatientHeight(resultSet.getInt(12));
-				patient.setPatientWeight(resultSet.getInt(13));
-				patient.setDoorNo(resultSet.getString(17));
-				patient.setStreet(resultSet.getString(18));
-				patient.setCity(resultSet.getString(19));
-				patient.setBloodGroup(resultSet.getString(20));
+				patient.setUsername(resultSet.getString("username"));
+				patient.setPassword(resultSet.getString("password"));
+				patient.setPkUserId(resultSet.getInt("pk_user_id"));
+				patient.setFkRoleId(resultSet.getInt("fk_role_id"));
+				patient.setFirstName(resultSet.getString("first_name"));
+				patient.setLastName(resultSet.getString("last_name"));
+				patient.setAge(resultSet.getInt("age"));
+				patient.setPkPatientId(resultSet.getInt("pk_patient_id"));
+				patient.setPatientHeight(resultSet.getInt("patient_height"));
+				patient.setPatientWeight(resultSet.getInt("patient_weight"));
+				patient.setDoorNo(resultSet.getString("door_no"));
+				patient.setStreet(resultSet.getString("street"));
+				patient.setCity(resultSet.getString("city"));
+				patient.setBloodGroup(resultSet.getString("blood_group"));
 				patientlist.add(patient);
 			}
 			return patientlist;
@@ -152,13 +157,14 @@ public class PatientDao {
 		}
 	}
 	public boolean updatePatient(Patient newdata) throws SQLException {
-		Connection connection = dbconnection.getConnection();
-
+		DbConnection dbconnect=null;
+		Connection connection=null;
 		PreparedStatement userStatement, patientStatement;
 		try {
+			dbconnect=new DbConnection();
+			connection=dbconnect.getConnection();
 			connection.setAutoCommit(false);
-			userStatement = connection.prepareStatement("update t_user SET password=?,age=? where pk_user_id=? and is_deleted=0",
-					Statement.RETURN_GENERATED_KEYS);
+			userStatement = connection.prepareStatement("update t_user SET password=?,age=? where pk_user_id=? and is_deleted=0");
 			userStatement.setString(1, newdata.getPassword());
 			userStatement.setInt(2, newdata.getAge());
 			userStatement.setInt(3, newdata.getPkUserId());
@@ -183,22 +189,26 @@ public class PatientDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			connection.rollback();
+			e.printStackTrace();
 			throw new SQLException();
 
-		}finally
+	}
+		finally
 		{
 			if(connection!=null)
-				dbconnection.closeConnection();
+				dbconnect.closeConnection();
 		}
 		return false;
 	}
 
 
 	public boolean deletePatient(int id) throws SQLException {
-		Connection connection = dbconnection.getConnection();
-
+		DbConnection dbconnection=null;
+		Connection connection=null;
 		PreparedStatement userStatement, patientStatement;
 		try {
+			dbconnection=new DbConnection();
+			connection = dbconnection.getConnection();
 			connection.setAutoCommit(false);
 			userStatement = connection.prepareStatement("update t_user SET is_deleted=1 where pk_user_id=?",
 					Statement.RETURN_GENERATED_KEYS);

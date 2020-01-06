@@ -2,7 +2,6 @@ package coda.global.hospital.model;
 
 public class Patient extends User {
 	private int pkPatientId;
-	private int fkUserId;
 	private int patientHeight;
 	private int patientWeight;
 	private String street;
@@ -16,12 +15,7 @@ public class Patient extends User {
 	public void setPkPatientId(int pkPatientId) {
 		this.pkPatientId = pkPatientId;
 	}
-	public int getFkUserId() {
-		return fkUserId;
-	}
-	public void setFkUserId(int fkUserId) {
-		this.fkUserId = fkUserId;
-	}
+
 	public int getPatientHeight() {
 		return patientHeight;
 	}
@@ -60,7 +54,7 @@ public class Patient extends User {
 	}
 	@Override
 	public String toString() {
-		return "Patient [pkPatientId=" + pkPatientId + ", fkUserId=" + fkUserId + ", patientHeight=" + patientHeight
+		return "Patient [pkPatientId=" + pkPatientId + ", patientHeight=" + patientHeight
 				+ ", patientWeight=" + patientWeight + ", street=" + street + ", city=" + city + ", doorNo=" + doorNo
 				+ ", bloodGroup=" + bloodGroup + ", username=" + username + ", password=" + password + ", firstName="
 				+ firstName + ", lastName=" + lastName + ",  age=" + age + ", pkUserId=" + pkUserId

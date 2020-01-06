@@ -11,15 +11,16 @@ import java.util.List;
 import coda.global.hospital.model.Doctor;
 
 public class DoctorDao {
-	DbConnection dbconnection=new DbConnection();
 	Doctor doctor = null;
 	boolean result;
 
 	public Doctor createDoctor(Doctor doctor) throws SQLException {
-		Connection connection = dbconnection.getConnection();
-
+		DbConnection dbconnection = null;
+		Connection connection = null;
 		PreparedStatement userStatement, doctorStatement;
 		try {
+			dbconnection = new DbConnection();
+			connection = dbconnection.getConnection();
 			connection.setAutoCommit(false);
 			userStatement = connection.prepareStatement(
 					"insert into t_user (username,password,fk_role_id,first_name,last_name,age) values(?,?,?,?,?,?)",
@@ -60,21 +61,24 @@ public class DoctorDao {
 			connection.rollback();
 			throw new SQLException();
 
-		}finally
-		{
-			if(connection!=null)
+		} finally {
+			if (connection != null)
 				dbconnection.closeConnection();
 		}
 		return null;
 	}
 
 	public Doctor readDoctor(int id) throws SQLException {
-		Connection connection = dbconnection.getConnection();
+		DbConnection dbconnection = null;
+		Connection connection = null;
 		ResultSet resultSet;
 		PreparedStatement userStatement;
 		try {
+			dbconnection = new DbConnection();
+			connection = dbconnection.getConnection();
 			connection.setAutoCommit(false);
-			userStatement = connection.prepareStatement("select * from t_user join t_doctor on t_user.pk_user_id=t_doctor.fk_user_id where pk_user_id=? and t_user.is_deleted=0");
+			userStatement = connection.prepareStatement(
+					"select * from t_user join t_doctor on t_user.pk_user_id=t_doctor.fk_user_id where pk_user_id=? and t_user.is_deleted=0");
 			userStatement.setInt(1, id);
 			resultSet = userStatement.executeQuery();
 			if (resultSet.next()) {
@@ -96,22 +100,24 @@ public class DoctorDao {
 			// TODO Auto-generated catch block
 			throw new SQLException(e.getMessage());
 
-		}finally
-		{
-			if(connection!=null)
+		} finally {
+			if (connection != null)
 				dbconnection.closeConnection();
 		}
 	}
 
 	public List<Doctor> readAllDoctor() throws SQLException {
-		Connection connection = dbconnection.getConnection();
+		DbConnection dbconnection = null;
+		Connection connection = null;
 		ResultSet resultSet;
 		PreparedStatement userStatement;
 		List<Doctor> doctorlist = new ArrayList<Doctor>();
 		try {
+			dbconnection = new DbConnection();
+			connection = dbconnection.getConnection();
 			connection.setAutoCommit(false);
-			userStatement = connection
-					.prepareStatement("select * from t_user join t_doctor on t_user.pk_user_id=t_doctor.fk_user_id where t_user.is_deleted=0");
+			userStatement = connection.prepareStatement(
+					"select * from t_user join t_doctor on t_user.pk_user_id=t_doctor.fk_user_id where t_user.is_deleted=0");
 			resultSet = userStatement.executeQuery();
 			while (resultSet.next()) {
 				doctor = new Doctor();
@@ -133,26 +139,30 @@ public class DoctorDao {
 			// TODO Auto-generated catch block
 			throw new SQLException(e);
 
-		}finally
-		{
-			if(connection!=null)
+		} finally {
+			if (connection != null)
 				dbconnection.closeConnection();
 		}
 	}
-	public boolean updateDoctor(Doctor newdata) throws SQLException {
-		Connection connection = dbconnection.getConnection();
 
+	public boolean updateDoctor(Doctor newdata) throws SQLException {
+		DbConnection dbconnection = null;
+		Connection connection = null;
 		PreparedStatement userStatement, doctorStatement;
 		try {
+			dbconnection = new DbConnection();
+			connection = dbconnection.getConnection();
 			connection.setAutoCommit(false);
-			userStatement = connection.prepareStatement("update t_user SET password=?,age=? where pk_user_id=? and is_deleted=0",
+			userStatement = connection.prepareStatement(
+					"update t_user SET password=?,age=? where pk_user_id=? and is_deleted=0",
 					Statement.RETURN_GENERATED_KEYS);
 			userStatement.setString(1, newdata.getPassword());
 			userStatement.setInt(2, newdata.getAge());
 			userStatement.setInt(3, newdata.getPkUserId());
 			int rowsAffected = userStatement.executeUpdate();
 			if (rowsAffected == 1) {
-				doctorStatement = connection.prepareStatement("update t_doctor SET doctor_specialisation=?,experience=? where fk_user_id=? and is_deleted=0");
+				doctorStatement = connection.prepareStatement(
+						"update t_doctor SET doctor_specialisation=?,experience=? where fk_user_id=? and is_deleted=0");
 				doctorStatement.setString(1, newdata.getSpecialisation());
 				doctorStatement.setInt(2, newdata.getExperience());
 				doctorStatement.setInt(3, newdata.getPkUserId());
@@ -171,22 +181,23 @@ public class DoctorDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			connection.rollback();
+			e.printStackTrace();
 			throw new SQLException();
 
-		}finally
-		{
-			if(connection!=null)
+		} finally {
+			if (connection != null)
 				dbconnection.closeConnection();
 		}
 		return false;
 	}
 
-
 	public boolean deleteDoctor(int id) throws SQLException {
-		Connection connection = dbconnection.getConnection();
-
+		DbConnection dbconnection = null;
+		Connection connection = null;
 		PreparedStatement userStatement, doctorStatement;
 		try {
+			dbconnection = new DbConnection();
+			connection = dbconnection.getConnection();
 			connection.setAutoCommit(false);
 			userStatement = connection.prepareStatement("update t_user SET is_deleted=1 where pk_user_id=?",
 					Statement.RETURN_GENERATED_KEYS);
@@ -212,13 +223,11 @@ public class DoctorDao {
 			connection.rollback();
 			throw new SQLException();
 
-		}finally
-		{
-			if(connection!=null)
+		} finally {
+			if (connection != null)
 				dbconnection.closeConnection();
 		}
 		return false;
 	}
 
 }
-

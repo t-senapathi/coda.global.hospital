@@ -347,23 +347,23 @@ public class ApplicationDriver {
 		Patient patient = null;
 		PatientService patientService = new PatientService();
 		List<Patient> patientList = null;
-		LOGGER.info(menuConstant.getString(MenuConstants.HM_MENU_017));
-		LOGGER.info(menuConstant.getString(MenuConstants.HM_MENU_018));
-		LOGGER.info(menuConstant.getString(MenuConstants.HM_MENU_019));
-		LOGGER.info(menuConstant.getString(MenuConstants.HM_MENU_020));
-		LOGGER.info(menuConstant.getString(MenuConstants.HM_MENU_021));
+		LOGGER.info(menuConstant.getString(MenuConstants.HM_MENU_001));
+		LOGGER.info(menuConstant.getString(MenuConstants.HM_MENU_002));
+		LOGGER.info(menuConstant.getString(MenuConstants.HM_MENU_003));
+		LOGGER.info(menuConstant.getString(MenuConstants.HM_MENU_004));
+		LOGGER.info(menuConstant.getString(MenuConstants.HM_MENU_005));
 		choice = Integer.parseInt(scan.nextLine());
 		switch (choice) {
 		case 1: {
 			patient = inputPatient();
 			if (patientService.createPatient(patient))
-				LOGGER.info(outputConstant.getString(OutputConstants.HM_OUTPUT_007));
+				LOGGER.info(outputConstant.getString(OutputConstants.HM_OUTPUT_001));
 			else
-				LOGGER.info(outputConstant.getString(OutputConstants.HM_OUTPUT_010));
+				LOGGER.info(outputConstant.getString(OutputConstants.HM_OUTPUT_004));
 			break;
 		}
 		case 2: {
-			LOGGER.info(inputConstant.getString(InputConstants.HM_INPUT_017));
+			LOGGER.info(inputConstant.getString(InputConstants.HM_INPUT_001));
 			patientId = Integer.parseInt(scan.nextLine());
 			patient = patientService.readPatient(patientId);
 			if (patient != null)
@@ -383,7 +383,7 @@ public class ApplicationDriver {
 		case 4: {
 			int updateChoice;
 			Patient newdata = null;
-			LOGGER.info(inputConstant.getString(InputConstants.HM_INPUT_017));
+			LOGGER.info(inputConstant.getString(InputConstants.HM_INPUT_001));
 			patientId = Integer.parseInt(scan.nextLine());
 			newdata = patientService.readPatient(patientId);
 			LOGGER.info(menuConstant.getString(MenuConstants.HM_MENU_008));// update password
@@ -422,6 +422,7 @@ public class ApplicationDriver {
 			case 4: {
 				LOGGER.info(inputConstant.getString(InputConstants.HM_INPUT_003));
 				newdata.setAge(Integer.parseInt(scan.nextLine()));
+				System.out.println(newdata);
 				if (patientService.updatePatient(newdata))
 					LOGGER.info(outputConstant.getString(OutputConstants.HM_OUTPUT_002));
 				else
@@ -432,7 +433,7 @@ public class ApplicationDriver {
 			break;
 		}
 		case 5: {
-			LOGGER.info(inputConstant.getString(InputConstants.HM_INPUT_017));
+			LOGGER.info(inputConstant.getString(InputConstants.HM_INPUT_001));
 			patientId = Integer.parseInt(scan.nextLine());
 			if (patientService.deletePatient(patientId)) {
 				LOGGER.info(outputConstant.getString(OutputConstants.HM_OUTPUT_009));
@@ -526,6 +527,7 @@ public class ApplicationDriver {
 			case 4: {
 				LOGGER.info(inputConstant.getString(InputConstants.HM_INPUT_003));
 				newdata.setAge(Integer.parseInt(scan.nextLine()));
+				System.out.println(newdata);
 				if (doctorService.updateDoctor(newdata))
 					LOGGER.info(outputConstant.getString(OutputConstants.HM_OUTPUT_008));
 				else
